@@ -11,7 +11,7 @@ add_filter( 'forminator_custom_form_submit_errors', function( $submit_errors, $f
         return $submit_errors; 
     }
 
-    // 3. Configuration de l'appel à ton Lab Python
+    // 3. Configuration de l'appel au Lab Python
     // Remplace 127.0.0.1 par l'IP du serveur si WordPress est distant
     $api_url = 'http://127.0.0.1:8000/scan-iban'; 
     
@@ -33,11 +33,11 @@ add_filter( 'forminator_custom_form_submit_errors', function( $submit_errors, $f
     $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
     curl_close($ch);
 
-    // 5. Analyse de la réponse de ton API
+    // 5. Analyse de la réponse de l'API
     if ( $http_code === 200 ) {
         $result = json_decode($response, true);
         
-        // Si l'IBAN n'est pas trouvé ou invalide selon ton script Python
+        // Si l'IBAN n'est pas trouvé ou invalide 
         if ( isset($result['is_iban']) && $result['is_iban'] === false ) {
             $submit_errors[] = [ 
                 $file_field => "Erreur : L'IBAN sur ce document est invalide ou illisible. Veuillez fournir un RIB officiel." 
